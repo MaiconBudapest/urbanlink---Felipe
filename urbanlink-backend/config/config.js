@@ -9,7 +9,11 @@ const common = {
   port: Number(process.env.DB_PORT || 3306),
   dialect: 'mysql',
   logging: process.env.DB_LOGGING === 'true' ? console.log : false,
-  dialectOptions: { charset: 'utf8mb4' },
+  dialectOptions: {
+    charset: 'utf8mb4',
+    // Bancos MySQL na nuvem costumam exigir conexão segura: use DB_SSL=true no .env.
+    ...(process.env.DB_SSL === 'true' ? { ssl: { minVersion: 'TLSv1.2', rejectUnauthorized: true } } : {})
+  },
   define: { underscored: true, freezeTableName: true }
 };
 

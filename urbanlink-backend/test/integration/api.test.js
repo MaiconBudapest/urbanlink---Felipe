@@ -24,7 +24,7 @@ test('API responde health e rejeita payload de login inválido', async (t) => {
   assert.equal(docs.status, 200);
   assert.match(await docs.text(), /swagger/i);
 
-  const frontendPath = path.resolve(__dirname, '..', '..', '..', 'urbanlink-site');
+  const frontendPath = path.resolve(__dirname, '..', '..', 'public');
   if (fs.existsSync(frontendPath)) {
     const home = await fetch(`${base}/`);
     assert.equal(home.status, 200);

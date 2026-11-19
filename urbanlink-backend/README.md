@@ -40,7 +40,17 @@ API REST em Node.js, Express e MySQL para as telas da UrbanLink. A arquitetura a
    npm run dev
    ```
 
-A API fica em `http://localhost:3000`, a documentação interativa em `/api/docs`, e os checks de disponibilidade em `/api/health/live` e `/api/health/ready`. Se `urbanlink-site` estiver ao lado desta pasta, o servidor também publica seus arquivos estáticos na raiz. As páginas atuais continuam demonstrativas e ainda não enviam os formulários à API.
+A API fica em `http://localhost:3000`, a documentação interativa em `/api/docs`, e os checks de disponibilidade em `/api/health/live` e `/api/health/ready`. As telas do site ficam em `public/` e são publicadas na raiz (`http://localhost:3000/`). As páginas atuais continuam demonstrativas e ainda não enviam os formulários à API.
+
+## Publicar na Vercel
+
+O projeto já está preparado para a Vercel: a API vira uma função e as telas de `public/` são servidas pela CDN.
+
+1. Nas **Settings** do projeto na Vercel, defina **Root Directory** como `urbanlink-backend`.
+2. Crie um banco MySQL na nuvem (a Vercel não roda MySQL) e aplique as migrações nele a partir do seu computador, com o `.env` apontando para esse banco: `npm run db:migrate` e `npm run db:seed`.
+3. Em **Settings → Environment Variables**, cadastre: `NODE_ENV=production`, `JWT_SECRET`, `PII_ENCRYPTION_KEY` (gere com `npm run secrets:generate`), `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` e, se o provedor exigir conexão segura, `DB_SSL=true`. `FRONTEND_ORIGINS` e `TRUST_PROXY` são preenchidas automaticamente na Vercel; cadastre `FRONTEND_ORIGINS` só se usar um domínio próprio.
+4. Faça um **Redeploy**: variáveis novas só valem em deploys novos.
+5. Confira `/api/health/ready`. Se faltar alguma configuração, a API responde `503` com o código `API_NAO_INICIOU` e o motivo em `detalhes`.
 
 ## Primeiro administrador
 
@@ -121,4 +131,4 @@ Execute `npm test` para cobrir cálculo de tarifas, proteção de dados, transi�
 | Módulo 5: pesquisa e paginação | filtros e paginação em usuários, envios, parcerias e contatos | Validação de consulta no middleware |
 | Módulo 6: requisitos de negócio e proteção | cotação, cancelamento, transições, consentimento e dados criptografados | Testes de cotação, PII e transições |
 | Módulo 7: testes e rastreabilidade | testes unitários, integração HTTP e esta tabela | `npm test` |
-| Módulos 8–9: telas e integração | serve as telas irmãs e expõe API documentada para integração futura | Health e validação HTTP; front-end ainda permanece demonstrativo |
+| Módulos 8–9: telas e integração | serve as telas de `public/` e expõe API documentada para integração futura | Health e validação HTTP; front-end ainda permanece demonstrativo |
