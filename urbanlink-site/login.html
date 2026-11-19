@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17161b">
+  <meta name="description" content="Acesse sua conta UrbanLink.">
+  <title>Entrar — UrbanLink</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-page="login" class="auth-body">
+  <div id="site-header"></div>
+  <main class="auth-page">
+    <div class="auth-orb auth-orb-one" aria-hidden="true"></div><div class="auth-orb auth-orb-two" aria-hidden="true"></div>
+    <div class="auth-container container">
+      <div class="auth-promo"><a href="index.html" class="auth-logo"><img src="assets/logo.png" alt="UrbanLink"></a><p class="eyebrow eyebrow-light">Sua cidade mais conectada</p><h1>Boas entregas começam <span>com um acesso.</span></h1><p>Acompanhe envios, organize seus pedidos e fique por dentro de cada etapa.</p><div class="auth-promo-art"><img src="assets/courier-city.jpg" alt="Entregador UrbanLink na cidade"></div></div>
+      <form id="login-form" class="auth-card" data-success="Acesso de demonstração realizado.">
+        <span class="auth-card-kicker">Bem-vindo de volta</span><h2>Entre na sua conta</h2><p>Acesse seu espaço UrbanLink.</p>
+        <label class="field"><span>E-mail</span><input name="email" type="email" required autocomplete="email" placeholder="voce@email.com"></label>
+        <label class="field"><span>Senha</span><span class="password-field"><input name="password" type="password" required minlength="4" autocomplete="current-password" placeholder="Digite sua senha"><button class="password-toggle" type="button" aria-label="Mostrar senha">◉</button></span></label>
+        <div class="auth-options"><label class="remember-check"><input type="checkbox" name="remember"><span>Manter conectado</span></label><a href="contato.html">Precisa de ajuda?</a></div>
+        <button class="button button-lime button-wide" type="submit">Entrar <span aria-hidden="true">→</span></button><p class="form-response" aria-live="polite" hidden></p>
+        <p class="auth-switch">Ainda não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+        <p class="auth-demo-note">Acesso demonstrativo: a sessão fica salva somente neste navegador.</p>
+      </form>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

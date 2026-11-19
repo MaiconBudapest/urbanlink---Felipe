@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17161b">
+  <meta name="description" content="Consulte seus pedidos e dados da conta UrbanLink.">
+  <title>Minha conta — UrbanLink</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-page="conta">
+  <div id="site-header"></div>
+  <main class="account-page page-shell">
+    <section class="page-intro container"><div><p class="eyebrow eyebrow-purple">Área da conta</p><h1>Seu espaço <span>UrbanLink.</span></h1><p>Consulte seus pedidos e mantenha seus dados organizados.</p></div></section>
+    <section class="account-dashboard container">
+      <aside class="account-profile-card"><div class="account-profile-avatar" aria-hidden="true">UL</div><p class="eyebrow eyebrow-purple">Minha conta</p><h2 id="account-name">Olá, visitante</h2><p id="account-email">Acesse para ver seus dados</p><p id="account-document" class="account-document">Conta demonstrativa</p><button class="button button-outline-purple button-wide" type="button" id="account-page-signout">Sair da conta</button><a class="account-signin-link" href="login.html">Entrar em outra conta</a></aside>
+      <div class="account-main-content">
+        <section class="account-section" id="pedidos"><div class="account-section-heading"><div><p class="eyebrow eyebrow-purple">Atividade</p><h2>Meus pedidos</h2></div><a class="text-link" href="rastreio.html">Rastrear pedido <span aria-hidden="true">↗</span></a></div><article class="order-preview"><span class="order-icon" aria-hidden="true">▣</span><div><small>Pedido de demonstração · UL-4829-1750</small><strong>Entrega em rota</strong><span>Previsão demonstrativa: hoje</span></div><a href="rastreio.html" aria-label="Ver rastreio do pedido">→</a></article><p class="account-note">Os pedidos exibidos aqui são exemplos visuais. Esta página não está conectada a uma API.</p></section>
+        <section class="account-section" id="configuracoes"><div class="account-section-heading"><div><p class="eyebrow eyebrow-purple">Perfil</p><h2>Configurações da conta</h2></div></div><form id="account-form" class="account-form"><div class="form-row form-row-two"><label class="field"><span>Nome completo</span><input name="name" required autocomplete="name"></label><label class="field"><span>E-mail</span><input name="email" type="email" required autocomplete="email"></label></div><div class="form-row form-row-two"><label class="field"><span>CPF ou CNPJ</span><input name="document" inputmode="numeric"></label><label class="field"><span>Telefone</span><input name="phone" type="tel" autocomplete="tel"></label></div><button class="button button-dark" type="submit">Salvar alterações <span aria-hidden="true">→</span></button><p class="form-response" aria-live="polite" hidden></p></form></section>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

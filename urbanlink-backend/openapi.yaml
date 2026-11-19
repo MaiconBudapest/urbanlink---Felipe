@@ -1,0 +1,452 @@
+openapi: 3.0.3
+info:
+  title: UrbanLink API
+  version: 1.0.0
+  description: API REST da plataforma UrbanLink. Os valores iniciais de tarifa são demonstrativos.
+servers:
+  - url: /api
+tags:
+  - name: Acesso e contas
+  - name: Envios
+  - name: Parcerias e contato
+  - name: Tarifas
+paths:
+  /health/live:
+    get:
+      tags: [Acesso e contas]
+      summary: Verifica se o processo da API está ativo
+      responses:
+        '200': { description: API ativa }
+  /health/ready:
+    get:
+      tags: [Acesso e contas]
+      summary: Verifica se a API consegue acessar o banco
+      responses:
+        '200': { description: API pronta }
+        '503': { description: Banco indisponível }
+  /auth/login:
+    post:
+      tags: [Acesso e contas]
+      summary: Inicia uma sessão
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, format: password }
+      responses:
+        '200': { description: Token e dados públicos da conta }
+        '401': { description: Credenciais inválidas }
+  /auth/logout:
+    post:
+      tags: [Acesso e contas]
+      security: [{ bearerAuth: [] }]
+      summary: Invalida a sessão atual
+      responses:
+        '200': { description: Sessão encerrada }
+  /usuarios:
+    post:
+      tags: [Acesso e contas]
+      summary: Cria uma conta de cliente
+      description: O perfil público é sempre cliente; não é possível criar uma conta administrativa por esta rota.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password, phone, document]
+              properties:
+                name: { type: string }
+                email: { type: string, format: email }
+                password: { type: string, minLength: 6 }
+                phone: { type: string, description: Número com DDD }
+                document: { type: string, description: CPF ou CNPJ }
+      responses:
+        '201': { description: Conta criada }
+        '409': { description: E-mail ou documento já cadastrado }
+    get:
+      tags: [Acesso e contas]
+      security: [{ bearerAuth: [] }]
+      summary: Lista contas (administrador)
+      parameters:
+        - { in: query, name: pagina, schema: { type: integer, minimum: 1 } }
+        - { in: query, name: limite, schema: { type: integer, minimum: 1, maximum: 100 } }
+        - { in: query, name: busca, schema: { type: string } }
+        - { in: query, name: status, schema: { type: string } }
+        - { in: query, name: tipo, schema: { type: string } }
+      responses:
+        '200': { description: Página de contas }
+        '403': { description: Perfil sem permissão }
+  /usuarios/me:
+    get:
+      tags: [Acesso e contas]
+      security: [{ bearerAuth: [] }]
+      summary: Consulta a conta autenticada
+      responses:
+        '200': { description: Dados públicos da conta }
+    patch:
+      tags: [Acesso e contas]
+      security: [{ bearerAuth: [] }]
+      summary: Atualiza os próprios dados
+      responses:
+        '200': { description: Conta atualizada }
+  /usuarios/{id}:
+    patch:
+      tags: [Acesso e contas]
+      security: [{ bearerAuth: [] }]
+      summary: Atualiza perfil ou situação de uma conta (administrador)
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role: { type: string, enum: [cliente, operador, administrador, entregador, ponto_entrega] }
+                status: { type: string, enum: [ativo, suspenso] }
+      responses:
+        '200': { description: Conta atualizada }
+        '403': { description: Perfil sem permissão }
+    delete:
+      tags: [Acesso e contas]
+      security: [{ bearerAuth: [] }]
+      summary: Desativa uma conta (administrador)
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        '200': { description: Conta desativada }
+  /cotacoes:
+    post:
+      tags: [Envios]
+      summary: Calcula uma estimativa de envio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [serviceType, packages]
+              properties:
+                serviceType: { type: string, enum: [local, national] }
+                packages:
+                  type: array
+                  minItems: 1
+                  maxItems: 4
+                  items:
+                    type: object
+                    required: [heightCm, widthCm, lengthCm, weightKg]
+                    properties:
+                      heightCm: { type: number }
+                      widthCm: { type: number }
+                      lengthCm: { type: number }
+                      weightKg: { type: number }
+                      description: { type: string }
+      responses:
+        '200': { description: Estimativa com indicação se a tarifa é demonstrativa }
+        '422': { description: Modalidade sem tarifa ativa }
+  /envios:
+    post:
+      tags: [Envios]
+      security: [{ bearerAuth: [] }]
+      summary: Registra um envio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [serviceType, origin, destination, packages]
+              properties:
+                serviceType: { type: string, enum: [local, national] }
+                origin:
+                  type: object
+                  required: [address, zip]
+                  properties:
+                    address: { type: string }
+                    zip: { type: string }
+                destination:
+                  type: object
+                  required: [address, zip]
+                  properties:
+                    address: { type: string }
+                    zip: { type: string }
+                packages:
+                  type: array
+                  minItems: 1
+                  maxItems: 4
+                  items:
+                    type: object
+                    required: [heightCm, widthCm, lengthCm, weightKg]
+                    properties:
+                      heightCm: { type: number }
+                      widthCm: { type: number }
+                      lengthCm: { type: number }
+                      weightKg: { type: number }
+                      description: { type: string }
+      responses:
+        '201': { description: Envio criado com código de rastreio }
+        '401': { description: Conta não autenticada }
+    get:
+      tags: [Envios]
+      security: [{ bearerAuth: [] }]
+      summary: Lista envios para operação (administrador ou operador)
+      responses:
+        '200': { description: Página de envios }
+  /envios/me:
+    get:
+      tags: [Envios]
+      security: [{ bearerAuth: [] }]
+      summary: Lista envios do cliente autenticado
+      responses:
+        '200': { description: Página de envios }
+  /entregas/me:
+    get:
+      tags: [Envios]
+      security: [{ bearerAuth: [] }]
+      summary: Lista envios atribuídos ao entregador autenticado
+      responses:
+        '200': { description: Página de entregas atribuídas }
+  /envios/{id}:
+    get:
+      tags: [Envios]
+      security: [{ bearerAuth: [] }]
+      summary: Consulta um envio permitido para a conta
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        '200': { description: Detalhes do envio }
+        '403': { description: Conta sem acesso a este envio }
+  /envios/{id}/situacao:
+    patch:
+      tags: [Envios]
+      security: [{ bearerAuth: [] }]
+      summary: Atualiza a situação e registra um evento de rastreio
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status, publicDescription]
+              properties:
+                status: { type: string, enum: [preparando, coletado, em_transito, saiu_para_entrega, entregue, ocorrencia, cancelado] }
+                publicDescription: { type: string }
+                privateNote: { type: string }
+                location: { type: string }
+                isPublic: { type: boolean }
+      responses:
+        '200': { description: Situação atualizada }
+        '409': { description: Transição não permitida }
+  /envios/{id}/cancelar:
+    patch:
+      tags: [Envios]
+      security: [{ bearerAuth: [] }]
+      summary: Cancela um envio próprio ainda elegível
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        '200': { description: Envio cancelado }
+        '409': { description: Envio não pode mais ser cancelado }
+  /envios/{id}/entregador:
+    patch:
+      tags: [Envios]
+      security: [{ bearerAuth: [] }]
+      summary: Atribui um entregador ativo (administrador ou operador)
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [courierId]
+              properties:
+                courierId: { type: integer, minimum: 1 }
+      responses:
+        '200': { description: Entregador atribuído e operação registrada }
+  /rastreio/{codigo}:
+    get:
+      tags: [Envios]
+      summary: Consulta eventos públicos pelo código de rastreio
+      parameters:
+        - { in: path, name: codigo, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Situação e eventos públicos }
+        '404': { description: Código não encontrado }
+  /parcerias/entregadores:
+    post:
+      tags: [Parcerias e contato]
+      summary: Recebe inscrição de entregador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, phone, license, zip, state, vehicle, consent]
+              properties:
+                name: { type: string }
+                email: { type: string, format: email }
+                phone: { type: string }
+                license: { type: string }
+                zip: { type: string }
+                state: { type: string }
+                vehicle: { type: string, enum: [bicicleta, moto, carro, van, outro] }
+                consent: { type: boolean, enum: [true] }
+      responses:
+        '201': { description: Inscrição registrada }
+  /parcerias/pontos-de-entrega:
+    post:
+      tags: [Parcerias e contato]
+      summary: Recebe inscrição de ponto de entrega
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [businessName, responsibleName, email, phone, cnpj, zip, state, hours, days, consent]
+              properties:
+                businessName: { type: string }
+                responsibleName: { type: string }
+                email: { type: string, format: email }
+                phone: { type: string }
+                cnpj: { type: string }
+                zip: { type: string }
+                state: { type: string }
+                hours: { type: string }
+                days: { type: array, items: { type: string } }
+                consent: { type: boolean, enum: [true] }
+      responses:
+        '201': { description: Inscrição registrada }
+  /contato:
+    post:
+      tags: [Parcerias e contato]
+      summary: Recebe mensagem comercial
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, phone, company, message]
+              properties:
+                name: { type: string }
+                email: { type: string, format: email }
+                phone: { type: string }
+                company: { type: string }
+                monthlyVolume: { type: string, enum: ['Até 100', '101 a 500', '501 a 2.000', 'Mais de 2.000'] }
+                website: { type: string, format: uri }
+                message: { type: string }
+      responses:
+        '201': { description: Mensagem registrada }
+  /admin/parcerias:
+    get:
+      tags: [Parcerias e contato]
+      security: [{ bearerAuth: [] }]
+      summary: Lista e filtra inscrições de parceria (administrador ou operador)
+      responses:
+        '200': { description: Página de inscrições }
+  /admin/parcerias/{id}:
+    patch:
+      tags: [Parcerias e contato]
+      security: [{ bearerAuth: [] }]
+      summary: Analisa uma inscrição de parceria
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status: { type: string, enum: [em_analise, aprovado, rejeitado] }
+                internalNotes: { type: string }
+      responses:
+        '200': { description: Inscrição atualizada }
+  /admin/contatos:
+    get:
+      tags: [Parcerias e contato]
+      security: [{ bearerAuth: [] }]
+      summary: Lista mensagens recebidas (administrador ou operador)
+      responses:
+        '200': { description: Página de mensagens }
+  /admin/contatos/{id}:
+    patch:
+      tags: [Parcerias e contato]
+      security: [{ bearerAuth: [] }]
+      summary: Atualiza situação e anotação interna de uma mensagem
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status: { type: string, enum: [novo, em_atendimento, encerrado] }
+                internalNotes: { type: string }
+      responses:
+        '200': { description: Mensagem atualizada }
+  /tarifas:
+    get:
+      tags: [Tarifas]
+      summary: Lista tarifas públicas ativas
+      responses:
+        '200': { description: Tarifas com indicação de demonstração }
+  /admin/tarifas:
+    get:
+      tags: [Tarifas]
+      security: [{ bearerAuth: [] }]
+      summary: Lista todas as tarifas (administrador)
+      responses:
+        '200': { description: Tarifas ativas e inativas }
+    put:
+      tags: [Tarifas]
+      security: [{ bearerAuth: [] }]
+      summary: Cria ou atualiza a tarifa de uma modalidade (administrador)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [serviceType, basePrice, pricePerKg]
+              properties:
+                serviceType: { type: string, enum: [local, national] }
+                basePrice: { type: number, minimum: 0 }
+                pricePerKg: { type: number, minimum: 0 }
+                pricePerPackage: { type: number, minimum: 0 }
+                isDemo: { type: boolean }
+                isActive: { type: boolean }
+      responses:
+        '200': { description: Tarifa salva }
+  /admin/tarifas/{id}/desativar:
+    patch:
+      tags: [Tarifas]
+      security: [{ bearerAuth: [] }]
+      summary: Desativa uma tarifa (administrador)
+      parameters:
+        - { in: path, name: id, required: true, schema: { type: integer } }
+      responses:
+        '200': { description: Tarifa desativada }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

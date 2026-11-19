@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17161b">
+  <meta name="description" content="Conheça a parceria de entregadores UrbanLink.">
+  <title>Seja entregador parceiro — UrbanLink</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-page="entregador">
+  <div id="site-header"></div>
+  <main class="partner-page partner-page-courier">
+    <section class="partner-hero container">
+      <div class="partner-hero-copy"><p class="eyebrow eyebrow-purple">Parceria UrbanLink</p><h1>Faça seu caminho. <span>Leve novas possibilidades.</span></h1><p>Conecte-se a oportunidades de entrega, encontre rotas eficientes e contribua para uma logística mais inteligente.</p><a class="button button-dark" href="#cadastro-parceiro">Quero me cadastrar <span aria-hidden="true">↓</span></a></div>
+      <div class="partner-hero-art"><img src="assets/courier-bag.png" alt="Bolsa de entregas UrbanLink"><span class="art-stamp">Sua cidade<br>em movimento</span></div>
+    </section>
+    <section class="partner-benefits container">
+      <article class="benefit-card"><span class="benefit-index">01</span><h2>Rotas mais claras</h2><p>Receba informações organizadas para planejar melhor os seus percursos.</p></article>
+      <article class="benefit-card"><span class="benefit-index">02</span><h2>Mais oportunidades</h2><p>Conecte-se a empresas e pontos de entrega que precisam de parceiros na cidade.</p></article>
+      <article class="benefit-card"><span class="benefit-index">03</span><h2>Flexibilidade</h2><p>Apresente seu perfil e conheça possibilidades alinhadas ao seu veículo.</p></article>
+    </section>
+    <section class="partner-form-section" id="cadastro-parceiro"><div class="partner-form-wrap container"><div class="partner-form-intro"><p class="eyebrow eyebrow-purple">Vamos conversar?</p><h2>Conte um pouco <span>sobre você.</span></h2><p>Preencha seus dados para que a equipe possa entrar em contato. Este formulário é uma demonstração e não envia informações.</p><div class="partner-help"><strong>Ficou com dúvidas?</strong><span>Escreva para <a href="mailto:parcerias@urbanlink.com.br">parcerias@urbanlink.com.br</a></span></div></div>
+      <form class="form-card partner-form" data-success="Cadastro de demonstração concluído. A equipe não recebeu seus dados.">
+        <div class="form-card-heading"><span class="form-step">01 / 01</span><h3>Seus dados</h3><p>Os campos com * são obrigatórios.</p></div>
+        <div class="form-row form-row-two"><label class="field"><span>Nome completo *</span><input name="name" required autocomplete="name" placeholder="Como podemos chamar você?"></label><label class="field"><span>E-mail *</span><input name="email" type="email" required autocomplete="email" placeholder="voce@email.com"></label></div>
+        <div class="form-row form-row-two"><label class="field"><span>Telefone *</span><input name="phone" type="tel" required autocomplete="tel" placeholder="(00) 00000-0000"></label><label class="field"><span>CNH *</span><input name="license" required placeholder="Número do documento"></label></div>
+        <div class="form-row form-row-two"><label class="field"><span>CEP *</span><input name="zip" required inputmode="numeric" autocomplete="postal-code" placeholder="00000-000"></label><label class="field"><span>Estado *</span><select name="state" required><option value="">Selecione</option><option>Rio de Janeiro</option><option>São Paulo</option><option>Minas Gerais</option><option>Outro estado</option></select></label></div>
+        <fieldset class="vehicle-fieldset"><legend>Qual veículo você utiliza?</legend><label><input type="radio" name="vehicle" value="bicicleta" required><span>♧ Bicicleta</span></label><label><input type="radio" name="vehicle" value="moto"><span>◉ Moto</span></label><label><input type="radio" name="vehicle" value="carro"><span>▱ Carro</span></label></fieldset>
+        <label class="consent-check"><input type="checkbox" required><span>Concordo em compartilhar estes dados para receber contato sobre a parceria.</span></label>
+        <button class="button button-dark button-wide" type="submit">Enviar cadastro <span aria-hidden="true">→</span></button><p class="form-response" aria-live="polite" hidden></p>
+      </form></div></section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17161b">
+  <meta name="description" content="Fale com a equipe UrbanLink e encontre uma solução para a sua operação.">
+  <title>Fale com a UrbanLink — Contato</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-page="contato">
+  <div id="site-header"></div>
+  <main class="contact-page">
+    <section class="contact-layout container">
+      <div class="contact-visual"><p class="eyebrow eyebrow-light">Fale com a gente</p><h1>Uma boa conversa pode <span>mover a sua operação.</span></h1><p>Conte o que sua empresa precisa. Vamos encontrar juntos um caminho possível.</p><div class="contact-illustration"><img src="assets/courier-bag.png" alt="Bolsa de entregas UrbanLink"><span class="contact-orbit" aria-hidden="true"></span></div><div class="contact-side-note"><span class="note-line"></span><span>Conexões urbanas<br>começam por aqui.</span></div></div>
+      <div class="contact-form-wrap" id="ajuda"><div class="contact-form-heading"><p class="eyebrow eyebrow-purple">Contato comercial</p><h2>Como podemos <span>ajudar?</span></h2><p>Preencha os dados e veja uma confirmação local da demonstração.</p></div>
+        <form id="contact-form" class="form-card contact-form" data-success="Obrigado! Esta confirmação é local; sua mensagem não foi enviada.">
+          <label class="field"><span>Seu nome completo *</span><input name="name" required autocomplete="name" placeholder="Nome e sobrenome"></label>
+          <label class="field"><span>E-mail corporativo *</span><input name="email" type="email" required autocomplete="email" placeholder="voce@empresa.com.br"></label>
+          <div class="form-row form-row-two"><label class="field"><span>Celular *</span><input name="phone" type="tel" required autocomplete="tel" placeholder="(00) 00000-0000"></label><label class="field"><span>Empresa *</span><input name="company" required autocomplete="organization" placeholder="Nome da empresa"></label></div>
+          <div class="form-row form-row-two"><label class="field"><span>Entregas por mês</span><select name="volume"><option value="">Selecione uma faixa</option><option>Até 100</option><option>101 a 500</option><option>501 a 2.000</option><option>Mais de 2.000</option></select></label><label class="field"><span>Site da empresa</span><input name="website" type="url" placeholder="https://"></label></div>
+          <label class="field"><span>O que sua empresa precisa? *</span><textarea name="message" rows="4" required placeholder="Conte um pouco sobre a sua operação e os desafios de entrega."></textarea></label>
+          <button class="button button-lime button-wide" type="submit">Enviar mensagem <span aria-hidden="true">→</span></button><p class="form-response" aria-live="polite" hidden></p><p class="form-footnote">Este protótipo não encaminha os dados para um servidor.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

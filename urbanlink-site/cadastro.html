@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17161b">
+  <meta name="description" content="Crie sua conta UrbanLink para organizar seus envios.">
+  <title>Criar conta — UrbanLink</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-page="cadastro" class="auth-body">
+  <div id="site-header"></div>
+  <main class="auth-page auth-page-register">
+    <div class="auth-orb auth-orb-one" aria-hidden="true"></div><div class="auth-orb auth-orb-two" aria-hidden="true"></div>
+    <div class="auth-container container">
+      <div class="auth-promo"><a href="index.html" class="auth-logo"><img src="assets/logo.png" alt="UrbanLink"></a><p class="eyebrow eyebrow-light">Comece por aqui</p><h1>Uma conta simples. <span>Novos caminhos.</span></h1><p>Crie seu acesso para reunir seus pedidos e acompanhar suas entregas em um só lugar.</p><div class="auth-promo-art auth-promo-art-box"><img src="assets/parcel-box.png" alt="Pacote UrbanLink pronto para envio"></div></div>
+      <form id="register-form" class="auth-card" data-success="Conta demonstrativa criada neste navegador.">
+        <span class="auth-card-kicker">Cadastro UrbanLink</span><h2>Crie sua conta</h2><p>Leva só um minuto.</p>
+        <label class="field"><span>Nome completo</span><input name="name" required autocomplete="name" placeholder="Como devemos chamar você?"></label>
+        <label class="field"><span>E-mail</span><input name="email" type="email" required autocomplete="email" placeholder="voce@email.com"></label>
+        <div class="form-row form-row-two"><label class="field"><span>CPF ou CNPJ</span><input name="document" required inputmode="numeric" placeholder="Seu documento"></label><label class="field"><span>Telefone</span><input name="phone" type="tel" required autocomplete="tel" placeholder="(00) 00000-0000"></label></div>
+        <label class="field"><span>Senha</span><span class="password-field"><input name="password" type="password" required minlength="6" autocomplete="new-password" placeholder="Pelo menos 6 caracteres"><button class="password-toggle" type="button" aria-label="Mostrar senha">◉</button></span></label>
+        <label class="field"><span>Confirme sua senha</span><span class="password-field"><input name="password-confirm" type="password" required minlength="6" autocomplete="new-password" placeholder="Digite a senha novamente"><button class="password-toggle" type="button" aria-label="Mostrar senha">◉</button></span></label>
+        <label class="consent-check"><input type="checkbox" required><span>Entendi que este cadastro é demonstrativo e que os dados ficam apenas neste navegador.</span></label>
+        <button class="button button-lime button-wide" type="submit">Criar conta <span aria-hidden="true">→</span></button><p class="form-response" aria-live="polite" hidden></p>
+        <p class="auth-switch">Já possui conta? <a href="login.html">Entrar</a></p>
+        <p class="auth-demo-note">Cadastro demonstrativo: seus dados ficam somente neste navegador.</p>
+      </form>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

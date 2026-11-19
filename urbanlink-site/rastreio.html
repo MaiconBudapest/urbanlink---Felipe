@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17161b">
+  <meta name="description" content="Acompanhe o caminho do seu pedido com a UrbanLink.">
+  <title>Rastrear pedido — UrbanLink</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-page="rastreio">
+  <div id="site-header"></div>
+  <main class="tracking-page">
+    <section class="tracking-hero container">
+      <p class="eyebrow eyebrow-purple">Rastreamento UrbanLink</p>
+      <h1>Sua entrega, <span>no caminho certo.</span></h1>
+      <p>Digite o código do pedido para acompanhar as atualizações do trajeto.</p>
+      <form class="tracking-search" id="tracking-form">
+        <label class="sr-only" for="tracking-code">Código de rastreio</label>
+        <span aria-hidden="true" class="search-icon">⌕</span>
+        <input id="tracking-code" name="tracking-code" required minlength="4" value="UL-4829-1750" placeholder="Ex.: UL-4829-1750" autocomplete="off">
+        <button class="button button-dark" type="submit">Rastrear <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="tracking-hint">Experimente o código de demonstração <button type="button" class="inline-code" data-demo-code="UL-4829-1750">UL-4829-1750</button></p>
+    </section>
+    <section class="tracking-content container" id="tracking-result" aria-live="polite">
+      <div class="tracking-overview">
+        <div class="route-card">
+          <p class="eyebrow eyebrow-purple">Pedido <span id="result-tracking-code">UL-4829-1750</span></p>
+          <div class="route-stop"><span class="route-dot route-dot-start"></span><div><small>Origem</small><strong>Centro de distribuição UrbanLink</strong><span>Maracanã, Rio de Janeiro</span></div></div>
+          <div class="route-connector"></div>
+          <div class="route-stop"><span class="route-dot route-dot-end"></span><div><small>Destino</small><strong>Rua São Francisco Xavier, 417</strong><span>Maracanã, Rio de Janeiro</span></div></div>
+          <div class="route-status"><span class="status-pulse"></span><div><small>Status atual</small><strong>Em rota de entrega</strong></div><span class="status-label">A caminho</span></div>
+        </div>
+        <div class="tracking-map-wrap"><img src="assets/tracking-map.png" alt="Mapa ilustrativo da região de Maracanã, Rio de Janeiro"><svg class="map-route" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="M140 510 C220 490 206 395 315 386 S450 335 493 286 S592 220 666 128"/><circle cx="140" cy="510" r="12"/><circle cx="666" cy="128" r="12"/></svg><div class="map-label"><span class="map-live-dot"></span> Trajeto ilustrativo</div><div class="map-controls" aria-hidden="true"><button type="button" tabindex="-1">＋</button><button type="button" tabindex="-1">−</button></div></div>
+      </div>
+      <div class="tracking-details">
+        <div><p class="eyebrow eyebrow-purple">Acompanhe as etapas</p><h2>Atualizações do pedido</h2></div>
+        <ol class="timeline"><li class="timeline-done"><span></span><div><strong>Pedido recebido</strong><small>Hoje, 09:12 · O pedido foi registrado.</small></div></li><li class="timeline-done"><span></span><div><strong>Preparado para envio</strong><small>Hoje, 10:05 · O pacote saiu do centro de distribuição.</small></div></li><li class="timeline-current"><span></span><div><strong>Em rota de entrega</strong><small>Hoje, 11:24 · O entregador está a caminho do destino.</small></div></li><li><span></span><div><strong>Entrega concluída</strong><small>A confirmação aparecerá aqui.</small></div></li></ol>
+      </div>
+    </section>
+    <section class="tracking-empty container" id="tracking-empty" hidden><div class="empty-route-icon" aria-hidden="true">⌖</div><h2>O caminho começa com um código.</h2><p>Use o campo acima para visualizar uma demonstração de rastreamento.</p></section>
+    <p class="demo-disclaimer container">Prévia demonstrativa: o rastreamento não está conectado a uma transportadora ou serviço de localização.</p>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>
